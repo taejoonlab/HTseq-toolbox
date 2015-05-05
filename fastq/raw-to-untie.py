@@ -110,7 +110,7 @@ f_untie_1.close()
 f_untie_2.close()
 
 f_raw = open('%s_R1.raw.pos_call'%filename_out,'w')
-f_called = open('%s.untie_2.pos_call'%filename_out,'w')
+f_called = open('%s.untie_1.pos_call'%filename_out,'w')
 f_raw.write('Position\tA\tT\tG\tC\tN\n')
 f_called.write('Position\tA\tT\tG\tC\n')
 for tmp_i in range(0,read1_len):
