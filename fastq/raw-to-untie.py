@@ -96,10 +96,10 @@ for line in f_fq1:
         
         h1_tokens = h_nseq1.split()
         if( len(h1_tokens) > 1 ):
-            h_nseq1 = '@%s'%h1_tokens[1]
+            h_nseq1 = '%s'%h1_tokens[0]
         h2_tokens = h_nseq2.split()
         if( len(h2_tokens) > 1 ):
-            h_nseq2 = '@%s'%h2_tokens[1]
+            h_nseq2 = '%s'%h2_tokens[0]
 
         f_untie_1.write('%s\n%s\n+\n%s\n'%(h_nseq1,nseq1,qseq1))
         f_untie_2.write('%s\n%s\n+\n%s\n'%(h_nseq2,nseq2,qseq2))
