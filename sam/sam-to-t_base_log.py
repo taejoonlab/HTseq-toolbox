@@ -72,13 +72,14 @@ for line in f_sam:
     read_id = tokens[0]
     hit_flag = int(tokens[1])
     t_id = tokens[2]
-    if( t_id == '*' ):
-        continue
+    tmp_cigar = tokens[5]
 
+    if( t_id == '*' or tmp_cigar == '*' ):
+        continue
+    
     start_pos = int(tokens[3])
     read_seq = tokens[9]
     read_len = len(read_seq)
-    tmp_cigar = tokens[5]
     tmp_strand = '+'
     if( hit_flag & 16 ):
         tmp_strand = '-'
@@ -143,7 +144,7 @@ f_log = open(filename_log,'w')
 f_log.write('Target\tPos\tCount+\tCount-\tQuadruple\tBorder\tA\tT\tG\tC\n')
 for t_id in s_counts.keys():
     t_name = t_id.replace('|','_')
-    f_log.write('#Target: %s\n'%t_name)
+    #f_log.write('#Target: %s\n'%t_name)
     for i in range(0,len(s_counts[t_id])):
         f_log.write("%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n"%(t_id, i, s_counts[t_id][i], as_counts[t_id][i], quad_counts[t_id][i], boundary_counts[t_id][i],A_counts[t_id][i],T_counts[t_id][i],G_counts[t_id][i],C_counts[t_id][i]))
 f_log.close()
