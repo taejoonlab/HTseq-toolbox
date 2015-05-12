@@ -25,10 +25,6 @@ hole_start = 0
 hole_end = 0
 hole_cov_list = []
 
-
-t_id = 'NA'
-t_seq = ''
-
 f_base_log = open(filename_base_log,'r')
 if( filename_base_log.endswith('.gz') ):
     f_base_log = gzip.open(filename_base_log,'rb')
@@ -36,7 +32,7 @@ if( filename_base_log.endswith('.gz') ):
 
 f_vars = open(filename_vars,'w')
 
-t_id = ''
+t_id = 'NA'
 t_seq = ''
 
 prev_cov = 0
@@ -60,17 +56,18 @@ for line in f_base_log:
     tmp_freq = {'A':int(tokens[idx_A]), 'T':int(tokens[idx_T]), 'G':int(tokens[idx_G]), 'C':int(tokens[idx_C])}
     tmp_cov = int(tokens[2]) + int(tokens[3])
     if( tmp_cov == 0 ):
+        f_vars.write('%s\tGAP\t%d\t%s\n'%(t_id,tmp_pos,t_seq[tmp_pos]))
         continue
 
     tmp_n_list = sorted(tmp_freq.keys(), key=tmp_freq.get)
     top_n = tmp_n_list[-1]
     if( tmp_freq[top_n] > tmp_cov * 0.75 ):
         if( top_n != t_seq[tmp_pos] ):
-            f_vars.write('MUT\t%d\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\n'%(tmp_pos,t_seq[tmp_pos],top_n,tmp_cov,prev_cov,tmp_freq['A'],tmp_freq['T'],tmp_freq['G'],tmp_freq['C']))
+            f_vars.write('%s\tMUT\t%d\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\n'%(t_id,tmp_pos,t_seq[tmp_pos],top_n,tmp_cov,prev_cov,tmp_freq['A'],tmp_freq['T'],tmp_freq['G'],tmp_freq['C']))
     elif( top_n != t_seq[tmp_pos] ):
-        f_vars.write('HET\t%d\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\n'%(tmp_pos,t_seq[tmp_pos],top_n,tmp_cov,prev_cov,tmp_freq['A'],tmp_freq['T'],tmp_freq['G'],tmp_freq['C']))
+        f_vars.write('%s\tHET\t%d\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\n'%(t_id,tmp_pos,t_seq[tmp_pos],top_n,tmp_cov,prev_cov,tmp_freq['A'],tmp_freq['T'],tmp_freq['G'],tmp_freq['C']))
     else:
-        f_vars.write('het\t%d\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\n'%(tmp_pos,t_seq[tmp_pos],top_n,tmp_cov,prev_cov,tmp_freq['A'],tmp_freq['T'],tmp_freq['G'],tmp_freq['C']))
+        f_vars.write('%s\thet\t%d\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\n'%(t_id,tmp_pos,t_seq[tmp_pos],top_n,tmp_cov,prev_cov,tmp_freq['A'],tmp_freq['T'],tmp_freq['G'],tmp_freq['C']))
     prev_cov = tmp_cov
 f_base_log.close()
 f_vars.close()
