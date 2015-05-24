@@ -117,13 +117,13 @@ for filename_gtf in os.listdir('.'):
     out_sp_code = filename_tokens[0]
     if( sp_code.has_key(out_sp_code) ):
         out_sp_code = sp_code[out_sp_code]
-    out_version = filename_tokens[2]
+    out_version = filename_tokens[-3]
 
     f_log = open('%s_ens%s.log'%(out_sp_code,out_version),'w')
-    f_cdna = open('%s_ens%s_cdna.fa'%(out_sp_code,out_version),'w')
-    f_ncdna = open('%s_ens%s_ncdna.fa'%(out_sp_code,out_version),'w')
-    f_tx = open('%s_ens%s_tx.fa'%(out_sp_code,out_version),'w')
-    f_prot = open('%s_ens%s_prot.fa'%(out_sp_code,out_version),'w')
+    f_cdna = open('%s_ens%s_cdna_longest.fa'%(out_sp_code,out_version),'w')
+    f_ncdna = open('%s_ens%s_ncdna_longest.fa'%(out_sp_code,out_version),'w')
+    f_tx = open('%s_ens%s_tx_longest.fa'%(out_sp_code,out_version),'w')
+    f_prot = open('%s_ens%s_prot_longest.fa'%(out_sp_code,out_version),'w')
 
     sys.stderr.write('Read %s ...'%filename_gtf)
     f_log.write('#Read %s ...'%filename_gtf)
