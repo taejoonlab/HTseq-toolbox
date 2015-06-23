@@ -12,7 +12,7 @@ for line in f_seq:
         seq_h = line.strip().lstrip('>')
         seq_list[seq_h] = []
     else:
-        seq_list[seq_h].append( line.strip() )
+        seq_list[seq_h].append( line.strip().upper() )
 f_seq.close()
 
 seq_map = dict()
@@ -32,8 +32,8 @@ def revcomp(tmp_seq):
     return ''.join(rc[x] for x in tmp_seq[::-1])
 
 exc_list = dict()
-f_nr = open('%s.NR_fa'%filename_base,'w')
-f_nr_log = open('%s.NR_log'%filename_base,'w')
+f_nr = open('%s_NR.fa'%filename_base,'w')
+f_nr_log = open('%s_NR.log'%filename_base,'w')
 for tmp_seq in seq_map.keys():
     tmp_rc_seq = revcomp(tmp_seq)
     tmp_h_list = seq_map[tmp_seq]
@@ -47,7 +47,7 @@ for tmp_seq in seq_map.keys():
     tmp_h = tmp_h_list[0]
     f_nr.write('>%s\n%s\n'%(tmp_h,tmp_seq))
     if( len(tmp_h_list) > 1 ):
-        f_nr_log.write('%s\n%s\n'%(tmp_h,';;'.join(tmp_h_list)))
+        f_nr_log.write('%s <- %s\n'%(tmp_h,';;'.join(tmp_h_list)))
         count_multi += 1
     else:
         count_unique += 1
