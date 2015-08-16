@@ -15,9 +15,6 @@ f_fq2 = open(filename_fq2,'r')
 if( filename_fq2.endswith('.gz') ):
     f_fq2 = gzip.open(filename_fq2,'rb')
 
-read1_len = 0
-read2_len = 0
-
 nfreq1_raw = dict()
 nfreq2_raw = dict()
 nfreq1_called = dict()
@@ -36,10 +33,10 @@ for line in f_fq1:
     nseq1 = f_fq1.next().strip()
     h_qseq1 = f_fq1.next().strip()
     qseq1 = f_fq1.next().strip()
+    read1_len = len(nseq1)
 
-    if( read1_len == 0 ):
-        read1_len = len(nseq1)
-        for tmp_i in range(0,read1_len):
+    if( len(nfreq1_raw) < read1_len - 1 ):
+        for tmp_i in range(len(nfreq1_raw),read1_len):
             nfreq1_raw[tmp_i] = {'A':0,'T':0,'G':0,'C':0,'N':0}
             nfreq1_called[tmp_i] = {'A':0,'T':0,'G':0,'C':0,'N':0}
     
@@ -47,9 +44,10 @@ for line in f_fq1:
     nseq2 = f_fq2.next().strip()
     h_qseq2 = f_fq2.next().strip()
     qseq2 = f_fq2.next().strip()
-    if( read2_len == 0 ):
-        read2_len = len(nseq2)
-        for tmp_i in range(0,read2_len):
+    read2_len = len(nseq2)
+
+    if( len(nfreq2_raw) < read2_len ):
+        for tmp_i in range(len(nfreq2_raw),read2_len):
             nfreq2_raw[tmp_i] = {'A':0,'T':0,'G':0,'C':0,'N':0}
             nfreq2_called[tmp_i] = {'A':0,'T':0,'G':0,'C':0,'N':0}
     
