@@ -11,8 +11,13 @@ if( len(sys.argv) < 2 ):
 release_ver = sys.argv[1]
 
 species_list = []
-species_list.append('xenopus_tropicalis')
-species_list.append('homo_sapiens')
+dirname_base = os.path.dirname( os.path.realpath(__file__) )
+f_list = open(os.path.join(dirname_base,'ens_species.txt'),'r')
+for line in f_list:
+    if( line.startswith('#') ):
+        continue
+    species_list.append( line.strip().split()[1].lower() )
+f_list.close()
 
 ftp = FTP('ftp.ensembl.org')
 ftp.login()
@@ -29,7 +34,7 @@ def download_suffix(ftp, tmp_suffix):
 for tmp_sp in species_list:
     tmp_dir_gtf = '/pub/release-%02d/gtf/%s/'%(int(release_ver), tmp_sp)
     ftp.cwd(tmp_dir_gtf)
-    download_suffix(ftp, '.gtf.gz')
+    download_suffix(ftp, '%02d.gtf.gz'%(int(release_ver)))
 
     tmp_dir_fasta = '/pub/release-%02d/fasta/%s/'%(int(release_ver), tmp_sp)
     ftp.cwd(tmp_dir_fasta)

@@ -4,25 +4,23 @@ import sys
 import gzip
 
 query_prefix = sys.argv[1]
+
 is_clean = 0
 if( len(sys.argv) > 2 and sys.argv[2] == 'clean' ):
     is_clean = 1
 
 ## GTF snip
 #>ENST00000415118 havana_ig_gene:known chromosome:GRCh38:14:22438547:22438554:1 gene:ENSG00000223997 gene_biotype:TR_D_gene transcript_biotype:TR_D_gene
-#>ENST00000384254 ncrna:known chromosome:GRCh38:1:31497577:31497683:-1 gene:ENSG00000206981 gene_biotype:snRNA transcript_biotype:snRNA
-#>ENSP00000451042 prot:known chromosome:GRCh38:14:22438547:22438554:1 gene:ENSG00000223997 transcript:ENST00000415118 gene_biotype:TR_D_gene transcript_biotype:TR_D_gene
 
 sp_code = dict()
-sp_code['Anolis_carolinensis'] = 'ANOCA'
-sp_code['Danio_rerio'] = 'DANRE'
-sp_code['Gallus_gallus'] = 'CHICK'
-sp_code['Homo_sapiens'] = 'HUMAN'
-sp_code['Mus_musculus'] = 'MOUSE'
-sp_code['Oryzias_latipes'] = 'ORYLA'
-sp_code['Xenopus_tropicalis'] = 'XENTR'
-#Homo_sapiens.GRCh38.79.gtf.gz
-#Xenopus_tropicalis.JGI_4.2.79.gtf.gz
+dirname_base = os.path.dirname( os.path.realpath(__file__) )
+f_list = open(os.path.join(dirname_base,'ens_species.txt'),'r')
+for line in f_list:
+    if( line.startswith('#') ):
+        continue
+    tmp_tokens = line.strip().split()
+    sp_code[ tmp_tokens[1].capitalize() ] = tmp_tokens[0]
+f_list.close()
 
 def read_fa(filename):
     seq_h = ''
