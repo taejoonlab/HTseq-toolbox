@@ -1,16 +1,17 @@
 #!/bin/bash
+NUM_THREADS=6
 
-SAMTOOLS="$HOME/src/samtools/samtools-1.2/samtools"
-BWA="$HOME/src/bwa/bwa-0.7.12/bwa"
+SAMTOOLS="/work/src/samtools/samtools-1.2/samtools"
+BWA="/work/src/bwa/bwa-0.7.12/bwa"
 
-DB="$HOME/project/xenopus.db/bwadb/XENLA_JGIv18pV2_cdna_final"
+DB="/work/taejoon/xenopus.db/bwadb/XENLA_JGIv18pV3_cdna_final"
 DBNAME=$(basename $DB)
 
 for FQ1 in $(ls ../fastq/*.untie_1.fastq.gz)
 do
   FQ2=${FQ1/_1/_2}
-  gunzip $FQ1
-  gunzip $FQ2
+  unpigz -p $NUM_THREADS $FQ1
+  unpigz -p $NUM_THREADS $FQ2
   FQ1=${FQ1/.gz/}
   FQ2=${FQ2/.gz/}
 
