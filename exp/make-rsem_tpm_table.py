@@ -44,9 +44,9 @@ f.close()
 group_list = sorted(group_list)
 sample_list = sorted(sample_list)
 
-f_indiv_tpm = open('%s.indiv_tpm.txt'%output_name,'w')
-f_mean_tpm  = open('%s.mean_tpm.txt'%output_name,'w')
-f_low_tpm = open('%s.low_tpm.txt'%output_name,'w')
+f_indiv_tpm = open('%s.rsem_indiv_tpm.txt'%output_name,'w')
+f_mean_tpm  = open('%s.rsem_mean_tpm.txt'%output_name,'w')
+f_low_tpm = open('%s.rsem_low_tpm.txt'%output_name,'w')
 
 f_indiv_tpm.write('SeqID\t%s\n'%('\t'.join(sample_list)))
 f_low_tpm.write('SeqID\t%s\n'%('\t'.join(sample_list)))
