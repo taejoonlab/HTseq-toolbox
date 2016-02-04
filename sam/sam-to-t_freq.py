@@ -3,7 +3,7 @@ import os
 import sys
 
 filename_sam = sys.argv[1]
-filename_out = filename_sam.replace('.sam_hit','')+'.t_freq'
+filename_out = '%s.t_freq'%filename_sam
 
 t_map = dict()
 f_sam = open(filename_sam,'r')
@@ -12,6 +12,8 @@ for line in f_sam:
         continue
     tokens = line.strip().split("\t")
     t_id = tokens[2]
+    if( t_id == '*' ):
+        continue
     hit_pos = int(tokens[3])
     read_len = int(tokens[5].rstrip('M'))
     MD = tokens[12].replace('MD:Z:','')
