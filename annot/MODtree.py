@@ -3,10 +3,13 @@ filename_HS_names = 'ens70.HUMAN.prot2name.gz'
 filename_names = 'ens70.prot2name.gz'
 
 import gzip
+import os
+
+dirname_curr = os.path.dirname(os.path.realpath(__file__))
 
 def get_tax2sp():
     tax2sp = dict()
-    f_list =  open(filename_sp_list,'r')
+    f_list =  open(os.path.join(dirname_curr,filename_sp_list),'r')
     for line in f_list:
         tokens = line.strip().split("\t")
         sp_code = tokens[0]
@@ -17,7 +20,7 @@ def get_tax2sp():
 
 def get_HS_prot2names():
     HS_names = dict()
-    f_names = gzip.open(filename_HS_names,'rt')
+    f_names =  gzip.open(os.path.join(dirname_curr,filename_HS_names),'rt')
     for line in f_names:
         tokens = line.replace('"','').split()
         if len(tokens) != 4:
@@ -28,7 +31,7 @@ def get_HS_prot2names():
 
 def get_prot2names():
     prot_names = dict()
-    f_names = gzip.open(filename_names,'rt')
+    f_names =  gzip.open(os.path.join(dirname_curr,filename_names),'rt')
     for line in f_names:
         tokens = line.replace('"','').split()
         if len(tokens) != 4:
