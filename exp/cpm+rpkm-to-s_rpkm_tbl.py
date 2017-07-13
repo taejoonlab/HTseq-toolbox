@@ -6,7 +6,7 @@ import re
 filename_conf = sys.argv[1]
 output_name = filename_conf.split('.')[0]
 
-def read_rpkm(filename):
+def read_count(filename):
     rv = dict()
     f = open(filename,'r')
     for line in f:
@@ -46,13 +46,11 @@ f.close()
 group_list = sorted(group_list)
 sample_list = sorted(sample_list)
 
-f_indiv_rpkm = open('%s.best_indiv_rpkm.txt'%output_name,'w')
-f_indiv_rpkmInt = open('%s.best_indiv_rpkmInt.txt'%output_name,'w')
-f_mean_rpkm  = open('%s.best_mean_rpkm.txt'%output_name,'w')
-f_low_rpkm = open('%s.best_low_rpkm.txt'%output_name,'w')
+f_indiv_rpkm = open('%s.indiv_rpkm.txt'%output_name,'w')
+f_mean_rpkm  = open('%s.mean_rpkm.txt'%output_name,'w')
+f_low_rpkm = open('%s.low_rpkm.txt'%output_name,'w')
 
 f_indiv_rpkm.write('SeqID\t%s\n'%('\t'.join(sample_list)))
-f_indiv_rpkmInt.write('SeqID\t%s\n'%('\t'.join(sample_list)))
 f_low_rpkm.write('SeqID\t%s\n'%('\t'.join(sample_list)))
 f_mean_rpkm.write('SeqID\t%s\n'%('\t'.join(group_list)))
 for tmp_id in sorted(list(set(gene_list))):
@@ -79,7 +77,6 @@ for tmp_id in sorted(list(set(gene_list))):
     f_indiv_rpkmInt.write('%s\t%s\n'%(tmp_id,'\t'.join(['%d'%rpkm_indiv[x] for x in sample_list])))
     f_mean_rpkm.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%rpkm_mean[x] for x in group_list])))
 
-f_indiv_rpkmInt.close()
 f_low_rpkm.close()
 f_indiv_rpkm.close()
 f_mean_rpkm.close()

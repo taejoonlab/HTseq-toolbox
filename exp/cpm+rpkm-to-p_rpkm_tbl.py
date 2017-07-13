@@ -6,7 +6,7 @@ import re
 filename_conf = sys.argv[1]
 output_name = filename_conf.split('.')[0]
 
-def read_rpkm(filename):
+def read_count(filename):
     rv = dict()
     f = open(filename,'r')
     for line in f:
@@ -16,8 +16,8 @@ def read_rpkm(filename):
         t_id = tokens[0]
         if( t_id == 'gene_id' ):
             continue
-        tmp_rpkm = float(tokens[7])
-        rv[t_id] = {'rpkm': tmp_rpkm}
+        tmp_count = float(tokens[7])
+        rv[t_id] = {'count': tmp_count}
     f.close()
     return rv
 
@@ -38,7 +38,7 @@ for line in f:
     if( not exp.has_key(tmp_group) ):
         exp[tmp_group] = dict()
         group_list.append(tmp_group)
-    exp[tmp_group][tmp_sample] = read_rpkm(tmp_filename)
+    exp[tmp_group][tmp_sample] = read_count(tmp_filename)
     sample_list.append(tmp_sample)
     gene_list += exp[tmp_group][tmp_sample].keys()
 f.close()
@@ -46,40 +46,37 @@ f.close()
 group_list = sorted(group_list)
 sample_list = sorted(sample_list)
 
-f_indiv_rpkm = open('%s.best_indiv_rpkm.txt'%output_name,'w')
-f_indiv_rpkmInt = open('%s.best_indiv_rpkmInt.txt'%output_name,'w')
-f_mean_rpkm  = open('%s.best_mean_rpkm.txt'%output_name,'w')
-f_low_rpkm = open('%s.best_low_rpkm.txt'%output_name,'w')
+f_indiv_count = open('%s.indiv_p_rpkm.txt'%output_name,'w')
+f_mean_count  = open('%s.mean_p_rpkm.txt'%output_name,'w')
+f_low_count = open('%s.low_p_rpkm.txt'%output_name,'w')
 
-f_indiv_rpkm.write('SeqID\t%s\n'%('\t'.join(sample_list)))
-f_indiv_rpkmInt.write('SeqID\t%s\n'%('\t'.join(sample_list)))
-f_low_rpkm.write('SeqID\t%s\n'%('\t'.join(sample_list)))
-f_mean_rpkm.write('SeqID\t%s\n'%('\t'.join(group_list)))
+f_indiv_count.write('SeqID\t%s\n'%('\t'.join(sample_list)))
+f_low_count.write('SeqID\t%s\n'%('\t'.join(sample_list)))
+f_mean_count.write('SeqID\t%s\n'%('\t'.join(group_list)))
 for tmp_id in sorted(list(set(gene_list))):
-    rpkm_indiv = dict()
-    rpkm_mean = dict()
+    count_indiv = dict()
+    count_mean = dict()
     count_nonzero = 0
     for tmp_group in group_list:
-        rpkm_sum = 0
+        count_sum = 0
         for tmp_sample in exp[tmp_group].keys():
             if( exp[tmp_group][tmp_sample].has_key(tmp_id) ):
-                tmp_rpkm = exp[tmp_group][tmp_sample][tmp_id]['rpkm']
-                rpkm_indiv[tmp_sample] = tmp_rpkm
-                rpkm_sum += tmp_rpkm
-                if( tmp_rpkm > 1 ):
+                tmp_count = exp[tmp_group][tmp_sample][tmp_id]['count']
+                count_indiv[tmp_sample] = tmp_count
+                count_sum += tmp_count
+                if( tmp_count > 1 ):
                     count_nonzero += 1
             else:
-                rpkm_indiv[tmp_sample] = 0.0
-        rpkm_mean[tmp_group] = rpkm_sum*1.0/len(exp[tmp_group])
+                count_indiv[tmp_sample] = 0.0
+        count_mean[tmp_group] = count_sum*1.0/len(exp[tmp_group])
     
-    if( count_nonzero < 2 or sum(rpkm_indiv.values()) < 2.0 ):
-        f_low_rpkm.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%rpkm_indiv[x] for x in sample_list])))
+    if( count_nonzero < 2 or sum(count_indiv.values()) < 2.0 ):
+        f_low_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%count_indiv[x] for x in sample_list])))
         continue
-    f_indiv_rpkm.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%rpkm_indiv[x] for x in sample_list])))
-    f_indiv_rpkmInt.write('%s\t%s\n'%(tmp_id,'\t'.join(['%d'%rpkm_indiv[x] for x in sample_list])))
-    f_mean_rpkm.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%rpkm_mean[x] for x in group_list])))
+    f_indiv_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%count_indiv[x] for x in sample_list])))
+    f_indiv_countInt.write('%s\t%s\n'%(tmp_id,'\t'.join(['%d'%count_indiv[x] for x in sample_list])))
+    f_mean_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%count_mean[x] for x in group_list])))
 
-f_indiv_rpkmInt.close()
-f_low_rpkm.close()
-f_indiv_rpkm.close()
-f_mean_rpkm.close()
+f_low_count.close()
+f_indiv_count.close()
+f_mean_count.close()
