@@ -71,10 +71,10 @@ for tmp_id in sorted(list(set(gene_list))):
         count_mean[tmp_group] = count_sum*1.0/len(exp[tmp_group])
     
     if( count_nonzero < 2 or sum(count_indiv.values()) < 2.0 ):
-        f_low_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%count_indiv[x] for x in sample_list])))
+        f_low_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%d'%count_indiv[x] for x in sample_list])))
         continue
-    f_indiv_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%count_indiv[x] for x in sample_list])))
-    f_mean_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%count_mean[x] for x in group_list])))
+    f_indiv_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%d'%count_indiv[x] for x in sample_list])))
+    f_mean_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%d'%count_mean[x] for x in group_list])))
 
 f_low_count.close()
 f_indiv_count.close()
