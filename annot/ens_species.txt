@@ -6,4 +6,5 @@ HUMAN	homo_sapiens
 MOUSE	mus_musculus
 ORYLA	oryzias_latipes
 XENTR	xenopus_tropicalis
-RAN	rattus_norvegicus
+RAT	rattus_norvegicus
+TETNG	tetraodon_nigroviridis

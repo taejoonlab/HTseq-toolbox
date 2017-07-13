@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 import os
 import sys
 import re
@@ -41,7 +41,7 @@ for line in f_sam:
     if( not read_freq.has_key(h1_t) ):
         read_freq[h1_t] = 0
     read_freq[h1_t] += 1
-    if( h1_t == h2_t ):
+    if( h1_t == h2_t or h2_t == '=' ):
         if( not pair_freq.has_key(h1_t) ):
             pair_freq[h1_t] = 0
         pair_freq[h1_t] += 1
