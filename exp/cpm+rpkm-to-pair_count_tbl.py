@@ -6,7 +6,7 @@ import re
 filename_conf = sys.argv[1]
 output_name = filename_conf.split('.')[0]
 
-def read_rpkm(filename):
+def read_count(filename):
     rv = dict()
     f = open(filename,'r')
     for line in f:
