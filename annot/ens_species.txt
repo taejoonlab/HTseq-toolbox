@@ -7,4 +7,9 @@ MOUSE	mus_musculus
 ORYLA	oryzias_latipes
 XENTR	xenopus_tropicalis
 RAT	rattus_norvegicus
+<<<<<<< HEAD
 TETNG	tetraodon_nigroviridis
+=======
+DROME	drosophila_melanogaster
+CAEEL	caenorhabditis_elegans
+>>>>>>> c7a19037ef068833a7574d532eef586e7ee2106c
