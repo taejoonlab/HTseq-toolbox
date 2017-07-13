@@ -74,7 +74,6 @@ for tmp_id in sorted(list(set(gene_list))):
         f_low_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%count_indiv[x] for x in sample_list])))
         continue
     f_indiv_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%count_indiv[x] for x in sample_list])))
-    f_indiv_countInt.write('%s\t%s\n'%(tmp_id,'\t'.join(['%d'%count_indiv[x] for x in sample_list])))
     f_mean_count.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%count_mean[x] for x in group_list])))
 
 f_low_count.close()

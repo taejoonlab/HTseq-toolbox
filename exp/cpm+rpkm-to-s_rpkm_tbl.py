@@ -74,7 +74,6 @@ for tmp_id in sorted(list(set(gene_list))):
         f_low_rpkm.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%rpkm_indiv[x] for x in sample_list])))
         continue
     f_indiv_rpkm.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%rpkm_indiv[x] for x in sample_list])))
-    f_indiv_rpkmInt.write('%s\t%s\n'%(tmp_id,'\t'.join(['%d'%rpkm_indiv[x] for x in sample_list])))
     f_mean_rpkm.write('%s\t%s\n'%(tmp_id,'\t'.join(['%.3f'%rpkm_mean[x] for x in group_list])))
 
 f_low_rpkm.close()
